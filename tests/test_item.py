@@ -22,6 +22,3 @@ def test_apply_discount(item_instance):
     Item.pay_rate = 0.5
     item_instance.apply_discount()
     assert item_instance.price == 59.5 * 0.5
-
-
-
