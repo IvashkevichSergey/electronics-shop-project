@@ -53,6 +53,18 @@ class Item:
             raise Exception('Длина наименования товара превышает 10 символов')
         self._name = new_name
 
+    def __repr__(self):
+        """
+        Отображение информации об объекте класса в режиме отладки
+        """
+        return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        """
+        Отображение информации об объекте класса для пользователей
+        """
+        return self.name
+
     @classmethod
     def instantiate_from_csv(cls):
         """
