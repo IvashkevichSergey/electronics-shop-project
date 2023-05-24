@@ -76,13 +76,11 @@ class Item:
         path_to_file = os.path.join(current_directory, 'src', 'items.csv')
         # Открываем csv файл с нужной кодировкой
         with open(path_to_file, encoding='windows-1251') as file:
-            reader = csv.DictReader(file).reader
-            # Из данных по каждой строке создаём новые экземпляры класса Item,
-            # отсекая первую ненужную строку
+            cls.all.clear()
+            reader = csv.DictReader(file)
+            # Из данных по каждой строке создаём новые экземпляры класса Item
             for line in reader:
-                if reader.line_num == 1:
-                    continue
-                name, price, quantity = line
+                name, price, quantity = line['name'], line['price'], line['quantity']
                 cls(name, price, quantity)
 
     @staticmethod

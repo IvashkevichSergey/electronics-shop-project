@@ -36,7 +36,6 @@ def test_name_setter(item_instance):
 
 
 def test_instantiate_from_csv():
-    Item.all = []
     Item.instantiate_from_csv()
     assert len(Item.all) == 5
     assert Item.all[-1].name == 'Клавиатура'
