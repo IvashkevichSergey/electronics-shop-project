@@ -36,6 +36,17 @@ class Item:
         """
         self.price *= self.pay_rate
 
+    def __add__(self, other):
+        """
+        Сложение экземпляров классов Phone и Item
+        по количеству товара в магазине
+        """
+        if not isinstance(other, Item):
+            raise ValueError('Допустимо сложение только '
+                             'экземпляров классов Phone и Item')
+        else:
+            return self.quantity + other.quantity
+
     @property
     def name(self):
         """
@@ -57,7 +68,8 @@ class Item:
         """
         Отображение информации об объекте класса в режиме отладки
         """
-        return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity})"
+        return f"{self.__class__.__name__}('{self.name}', " \
+               f"{self.price}, {self.quantity})"
 
     def __str__(self):
         """
@@ -76,13 +88,13 @@ class Item:
         path_to_file = os.path.join(current_directory, 'src', 'items.csv')
         # Открываем csv файл с нужной кодировкой
         with open(path_to_file, encoding='windows-1251') as file:
-            reader = csv.DictReader(file).reader
-            # Из данных по каждой строке создаём новые экземпляры класса Item,
-            # отсекая первую ненужную строку
+            cls.all.clear()
+            reader = csv.DictReader(file)
+            # Из данных по каждой строке создаём
+            # новые экземпляры класса Item
             for line in reader:
-                if reader.line_num == 1:
-                    continue
-                name, price, quantity = line
+                name, price, quantity = \
+                    line['name'], line['price'], line['quantity']
                 cls(name, price, quantity)
 
     @staticmethod
