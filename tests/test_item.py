@@ -1,5 +1,6 @@
 import pytest
 from src.item import Item
+from src.InstantiateCSVError import InstantiateCSVError
 
 
 @pytest.fixture
@@ -63,3 +64,13 @@ def test_add(item_instance, item_instance_2):
     assert item_instance + item_instance_2 == 655
     with pytest.raises(Exception):
         item_instance + 100
+
+
+def test_exceptions():
+    # При удалённом файле items.csv из папки src
+    # with pytest.raises(FileNotFoundError):
+    #     Item.instantiate_from_csv()
+
+    # При повреждённом файле items.csv
+    # with pytest.raises(InstantiateCSVError):
+    #     Item.instantiate_from_csv()
