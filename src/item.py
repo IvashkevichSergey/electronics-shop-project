@@ -1,5 +1,6 @@
 import csv
 import os
+from src.InstantiateCSVError import InstantiateCSVError
 
 
 class Item:
@@ -87,10 +88,19 @@ class Item:
         # Сохраняем путь до csv файла
         current_directory = os.path.dirname(os.path.dirname(__file__))
         path_to_file = os.path.join(current_directory, 'src', 'items.csv')
+
+        # Вызываем исключение в случае когда файл item.csv не существует
+        if not os.path.isfile(path_to_file):
+            raise FileNotFoundError('Отсутствует файл item.csv')
+
         # Открываем csv файл с нужной кодировкой
         with open(path_to_file, encoding='windows-1251') as file:
             cls.all.clear()
             reader = csv.DictReader(file)
+            # Вызываем исключение в случае когда файл item.csv не корректен
+            if len(reader.fieldnames) != 3:
+                raise InstantiateCSVError('Файл item.csv поврежден')
+
             # Из данных по каждой строке создаём
             # новые экземпляры класса Item
             for line in reader:
